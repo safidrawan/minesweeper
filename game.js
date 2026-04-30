@@ -1,12 +1,13 @@
+const gameBoard = document.getElementById("game-board");
+const minesLeftElement = document.getElementById("mines-left");
+const resetButton = document.getElementById("reset-button");
+resetButton.addEventListener("click", () => {
+  location.reload();
+});
+
+
+
 function initializeGame() {
-  const gameBoard = document.getElementById("game-board");
-  const minesLeftElement = document.getElementById("mines-left");
-
-  const resetButton = document.getElementById("reset-button");
-  resetButton.addEventListener("click", () => {
-    location.reload();
-  });
-
   const rows = 10;
   const cols = 10;
   const totalMines = 15;
@@ -28,15 +29,29 @@ function createBoard(rows, cols, totalMines) {
     for (let j = 0; j < cols; j++) {
       const tile = document.createElement("div");
       tile.classList.add("tile");
+
       tile.addEventListener("click", () => {
         handleTileClick(tile, board, totalMines);
       });
+
+      tile.addEventListener("contextmenu", (e) => {
+        e.preventDefault();
+        handleRightClick(tile, minesLeftElement);
+      });
+
       tile.dataset.row = i;
       tile.dataset.col = j;
       board[i].push(tile);
     }
   }
   return board;
+}
+
+function handleRightClick(tile, minesLeftElement) {
+  if (tile.classList.contains("revealed")) return;
+  tile.classList.toggle("flagged");
+  const flaggedCount = document.querySelectorAll(".flagged").length;
+  minesLeftElement.textContent = parseInt(minesLeftElement.textContent) - (tile.classList.contains("flagged") ? 1 : -1);
 }
 
 function setMinePositions(board, totalMines) {
@@ -56,6 +71,7 @@ function setMinePositions(board, totalMines) {
 }
 
 function handleTileClick(tile, board, totalMines) {
+  if (tile.classList.contains('flagged')) return
   if (tile.classList.contains("mine")) {
     tile.classList.add('exploded');
     endGame(board, false);
@@ -67,7 +83,7 @@ function handleTileClick(tile, board, totalMines) {
     const minesAround = countMinesAround(board, row, col);
 
     tile.textContent = minesAround;
-    if (minesAround === 0) {
+    if (minesAround === '') {
       revealEmptyTiles(board, row, col);
     }
     if (countRevealedTiles(board) === board.length * board[0].length - totalMines) {
@@ -88,6 +104,7 @@ function endGame(board, won) {
 
     });
   });
+  minesLeftElement.textContent = 0;
   const message = won ? "Congratulations! You won!" : "Game Over! You hit a mine!";
   setTimeout(() => {
     alert(message);
@@ -127,6 +144,23 @@ function countRevealedTiles(board) {
 
 function revealEmptyTiles(board, row, col) {
 
+  for (let i = -1; i <= 1; i++) {
+    for (let j = -1; j <= 1; j++) {
+      const newRow = row + i;
+      const newCol = col + j;
+      if (newRow < 0 || newRow >= board.length || newCol < 0 || newCol >= board[0].length) continue;
+      const tile = board[newRow][newCol];
+      if (!tile.classList.contains("revealed") && !tile.classList.contains("mine")) {
+        tile.classList.add("revealed");
+        const minesAround = countMinesAround(board, newRow, newCol);
+        tile.textContent = minesAround;
+        if (minesAround === '') {
+          revealEmptyTiles(board, newRow, newCol);
+        }
+
+      }
+    }
+  }
 
 }
 
