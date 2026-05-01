@@ -76,3 +76,8 @@ header{
     background-color: #eee;
     color: #000;
 }
+
+footer{
+    margin-top: 20px;
+    color: #fff;
+}
