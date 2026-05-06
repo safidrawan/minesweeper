@@ -4,8 +4,13 @@ const resetButton = document.getElementById("reset-button");
 resetButton.addEventListener("click", () => {
   location.reload();
 });
-
-
+const header = document.querySelector("header");
+const gameOverMessage = document.getElementById("game-over-message");
+const playAgainButton = document.getElementById("play-again-button");
+playAgainButton.addEventListener("click", () => {
+  location.reload();
+});
+const gameOverText = document.getElementById("game-over-text");
 
 function initializeGame() {
   const rows = 10;
@@ -51,7 +56,9 @@ function handleRightClick(tile, minesLeftElement) {
   if (tile.classList.contains("revealed")) return;
   tile.classList.toggle("flagged");
   const flaggedCount = document.querySelectorAll(".flagged").length;
-  minesLeftElement.textContent = parseInt(minesLeftElement.textContent) - (tile.classList.contains("flagged") ? 1 : -1);
+  minesLeftElement.textContent =
+    parseInt(minesLeftElement.textContent) -
+    (tile.classList.contains("flagged") ? 1 : -1);
 }
 
 function setMinePositions(board, totalMines) {
@@ -71,9 +78,9 @@ function setMinePositions(board, totalMines) {
 }
 
 function handleTileClick(tile, board, totalMines) {
-  if (tile.classList.contains('flagged')) return
+  if (tile.classList.contains("flagged")) return;
   if (tile.classList.contains("mine")) {
-    tile.classList.add('exploded');
+    tile.classList.add("exploded");
     endGame(board, false);
   } else {
     tile.classList.add("revealed");
@@ -83,85 +90,102 @@ function handleTileClick(tile, board, totalMines) {
     const minesAround = countMinesAround(board, row, col);
 
     tile.textContent = minesAround;
-    if (minesAround === '') {
+    if (minesAround === "") {
       revealEmptyTiles(board, row, col);
     }
-    if (countRevealedTiles(board) === board.length * board[0].length - totalMines) {
+    if (
+      countRevealedTiles(board) ===
+      board.length * board[0].length - totalMines
+    ) {
       endGame(board, true);
     }
   }
 }
 
 function endGame(board, won) {
+  header.style.visibility = "hidden";
   board.forEach((row) => {
     row.forEach((tile) => {
       if (tile.classList.contains("mine")) {
-        tile.classList.add('exploded');
+        tile.classList.add("exploded");
+        tile.classList.remove("flagged");
       } else {
         tile.classList.add("revealed");
+        tile.classList.remove("flagged");
       }
       tile.removeEventListener("click", handleTileClick);
-
     });
   });
   minesLeftElement.textContent = 0;
-  const message = won ? "Congratulations! You won!" : "Game Over! You hit a mine!";
-  setTimeout(() => {
-    alert(message);
-  }, 100);
+  const message = won
+    ? "Congratulations! You won!"
+    : "Game Over! You hit a mine!";
+  gameOverMessage.style.display = "flex";
+  gameOverText.textContent = message;
 }
 
 function countMinesAround(board, row, col) {
   let count = 0;
   for (let i = -1; i <= 1; i++) {
     for (let j = -1; j <= 1; j++) {
-
       if (i === 0 && j === 0) continue;
       const newRow = row + i;
       const newCol = col + j;
-      if (newRow >= 0 && newRow < board.length && newCol >= 0 && newCol < board[0].length) {
-        if (board[newRow][newCol].classList.contains('mine')) {
+      if (
+        newRow >= 0 &&
+        newRow < board.length &&
+        newCol >= 0 &&
+        newCol < board[0].length
+      ) {
+        if (board[newRow][newCol].classList.contains("mine")) {
           count++;
         }
       }
     }
   }
-  return count === 0 ? '' : count;
+  return count === 0 ? "" : count;
 }
 
 function countRevealedTiles(board) {
   let count = 0;
-  board.forEach(row => {
-    row.forEach(tile => {
-      if (tile.classList.contains('revealed')) {
+  board.forEach((row) => {
+    row.forEach((tile) => {
+      if (tile.classList.contains("revealed")) {
         count++;
       }
-    })
-  })
+    });
+  });
   document.getElementById("tiles-revealed").textContent = count;
   return count;
 }
 
 function revealEmptyTiles(board, row, col) {
-
   for (let i = -1; i <= 1; i++) {
     for (let j = -1; j <= 1; j++) {
       const newRow = row + i;
       const newCol = col + j;
-      if (newRow < 0 || newRow >= board.length || newCol < 0 || newCol >= board[0].length) continue;
+      if (
+        newRow < 0 ||
+        newRow >= board.length ||
+        newCol < 0 ||
+        newCol >= board[0].length
+      )
+        continue;
       const tile = board[newRow][newCol];
-      if (!tile.classList.contains("revealed") && !tile.classList.contains("mine")) {
+      if (
+        !tile.classList.contains("revealed") &&
+        !tile.classList.contains("mine")
+      ) {
         tile.classList.add("revealed");
+        tile.classList.remove("flagged");
         const minesAround = countMinesAround(board, newRow, newCol);
         tile.textContent = minesAround;
-        if (minesAround === '') {
+        if (minesAround === "") {
           revealEmptyTiles(board, newRow, newCol);
         }
-
       }
     }
   }
-
 }
 
 document.addEventListener("DOMContentLoaded", initializeGame);

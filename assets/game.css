@@ -1,0 +1,129 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+:root {
+  --tile-size: 40px;
+  --radius-md: 10px;
+  --radius-lg: 20px;
+  --padding-md: 10px;
+  --padding-lg: 20px;
+
+
+  --mine-color: #f44336;
+  --flag-color: #fff;
+  --bg-color: #222;
+  --tile-bg-color: #444;
+  --text-color: #fff;
+  --btn-bg-color: #666;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--text-color);
+}
+
+.tile {
+  width: var(--tile-size);
+  height: var(--tile-size);
+  border: 1px solid #ccc;
+  display: inline-block;
+  line-height: var(--tile-size);
+  text-align: center;
+  font-size: 18px;
+  color: var(--text-color);
+  background-color: var(--tile-bg-color);
+  border-radius: var(--radius-md);
+}
+
+#game-board {
+  display: grid;
+  gap: 2px;
+  grid-template-columns: repeat(10, var(--tile-size));
+  width: max-content;
+  justify-content: center;
+  border: 2px solid #ccc;
+  padding: var(--padding-md);
+  border-radius: var(--radius-lg);
+}
+
+button {
+  margin-top: var(--padding-md);
+  padding: var(--padding-md) var(--padding-lg);
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  background-color: var(--btn-bg-color);
+  color: var(--text-color);
+  border: none;
+}
+.tile:hover {
+  cursor: pointer;
+  background-color: #555;
+}
+
+.tile.revealed {
+  background-color: #eee;
+  color: #000;
+  cursor: default;
+}
+
+.tile.mine.exploded {
+  background-color: var(--mine-color);
+  background-image: url(./images/bomb.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  color: var(--text-color);
+}
+
+.tile.flagged {
+  background-image: url(./images/flag.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-color: var(--flag-color);
+}
+
+.tile.number {
+  background-color: var(--tile-bg-color);
+  color: var(--text-color);
+}
+
+footer {
+  margin-top: 20px;
+  color: var(--text-color);
+}
+
+#game-over-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: var(--padding-lg) ;
+  font-size: 24px;
+  color: var(--mine-color);
+  padding: var(--padding-lg);
+  gap: var(--padding-lg);
+  border-radius: var(--radius-lg);
+}
+
+#game-over-text{
+  color: var(--mine-color);
+  text-align: center;
+}

@@ -3,20 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./game.css">
-    <link rel="icon" type="image/png" href="./flag.png">
+    <link rel="stylesheet" href="./assets/game.css">
+    <link rel="icon" type="image/png" href="./assets/images/flag.png">
+    <script defer src="./assets/game.js"></script>
     <title>Minesweeper</title>
 </head>
 <body>
     
   <header>
       <h1>Minesweeper</h1>
-    <p class="instructions">Left click to reveal a tile. Right click to flag a tile.</p>
+    <p class="instructions">Left click to reveal a tile. Right click/hold to flag/deflag a tile.</p>
     <p> Mines Left: <span id="mines-left">0</span></p>
     <p> Tiles Revealed: <span id="tiles-revealed">0</span></p>
     <button id="reset-button">Reset Game</button>
   </header>
    <main>
+    <div id="game-over-message" class="hidden">
+      <h2 id="game-over-text"></h2>
+      <button id="play-again-button">Play Again</button>
+    </div>
      <div id="game-board">
     </div>
    </main>
@@ -24,6 +29,5 @@
     Mohammad Rafi Safidrawan - 2026: Just for fun and learning purposes
    </footer>
 
-    <script src="./game.js"></script>
 </body>
 </html>
