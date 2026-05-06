@@ -1,23 +1,86 @@
 const gameBoard = document.getElementById("game-board");
 const minesLeftElement = document.getElementById("mines-left");
+const levelChooser = document.getElementById("level-chooser");
+// const gameSizeContainer = document.getElementById("game-size");
+// const gameLevelContainer = document.getElementById("game-level");
+
+const header = document.querySelector("header");
+const gameOverMessage = document.getElementById("game-over-message");
+const gameOverText = document.getElementById("game-over-text");
+
+const playAgainButton = document.getElementById("play-again-button");
 const resetButton = document.getElementById("reset-button");
+
+const explosionSound = new Audio("assets/sounds/explosion.ogg");
+const flagSound = new Audio("assets/sounds/flag.ogg");
+const defeatSound = new Audio("assets/sounds/defeat.ogg");
+const revealSound = new Audio("assets/sounds/reveal.ogg");
+
+const unflagSound = new Audio("assets/sounds/unflag.mp3");
+const winSound = new Audio("assets/sounds/win.mp3");
+
+explosionSound.loop = false;
+flagSound.loop = false;
+defeatSound.loop = false;
+revealSound.loop = false;
+unflagSound.loop = false;
+winSound.loop = false;
+
 resetButton.addEventListener("click", () => {
   location.reload();
 });
-const header = document.querySelector("header");
-const gameOverMessage = document.getElementById("game-over-message");
-const playAgainButton = document.getElementById("play-again-button");
 playAgainButton.addEventListener("click", () => {
   location.reload();
 });
-const gameOverText = document.getElementById("game-over-text");
+
+levelChooser.addEventListener("click", (e) => {
+  if (e.target.dataset.type === "size") {
+    size = e.target.dataset.value;
+  } else if (e.target.dataset.type === "difficulty") {
+    difficulty = e.target.dataset.value;
+  } else if (e.target.dataset.value === "start") {
+    if (!size || !difficulty) return;
+    rows = difficulties[size][difficulty].w;
+    cols = difficulties[size][difficulty].h;
+    totalMines = difficulties[size][difficulty].m;
+    document.documentElement.style.setProperty("--cols", cols);
+    initializeGame();
+  }
+  if (e.target.tagName === "BUTTON") {
+    const parentContainer = e.target.parentElement;
+    parentContainer.querySelector(".selected")?.classList.remove("selected");
+    e.target.classList.add("selected");
+  }
+});
+
+const difficulties = {
+  small: {
+    easy: { w: 9, h: 9, m: 10 },
+    normal: { w: 9, h: 9, m: 13 },
+    hard: { w: 9, h: 9, m: 16 },
+  },
+  medium: {
+    easy: { w: 16, h: 16, m: 30 },
+    normal: { w: 16, h: 16, m: 40 },
+    hard: { w: 16, h: 16, m: 52 },
+  },
+  large: {
+    easy: { w: 16, h: 30, m: 60 },
+    normal: { w: 16, h: 30, m: 99 },
+    hard: { w: 16, h: 30, m: 120 },
+  },
+};
+
+let size = "";
+let difficulty = "";
+let rows = 0;
+let cols = 0;
+let totalMines = 0;
 
 function initializeGame() {
-  const rows = 10;
-  const cols = 10;
-  const totalMines = 15;
   let minesLeft = totalMines;
   minesLeftElement.textContent = minesLeft;
+  levelChooser.style.display = "none";
   const board = createBoard(rows, cols, totalMines);
   setMinePositions(board, totalMines);
   board.forEach((row) => {
@@ -55,6 +118,12 @@ function createBoard(rows, cols, totalMines) {
 function handleRightClick(tile, minesLeftElement) {
   if (tile.classList.contains("revealed")) return;
   tile.classList.toggle("flagged");
+  if (tile.classList.contains("flagged")) {
+    flagSound.play();
+  } else {
+    unflagSound.play();
+  }
+
   const flaggedCount = document.querySelectorAll(".flagged").length;
   minesLeftElement.textContent =
     parseInt(minesLeftElement.textContent) -
@@ -81,9 +150,11 @@ function handleTileClick(tile, board, totalMines) {
   if (tile.classList.contains("flagged")) return;
   if (tile.classList.contains("mine")) {
     tile.classList.add("exploded");
+    explosionSound.play();
     endGame(board, false);
   } else {
     tile.classList.add("revealed");
+    revealSound.play();
     const row = parseInt(tile.dataset.row);
     const col = parseInt(tile.dataset.col);
 
@@ -117,6 +188,11 @@ function endGame(board, won) {
     });
   });
   minesLeftElement.textContent = 0;
+  if (won) {
+    winSound.play();
+  } else {
+    defeatSound.play();
+  }
   const message = won
     ? "Congratulations! You won!"
     : "Game Over! You hit a mine!";
@@ -187,5 +263,3 @@ function revealEmptyTiles(board, row, col) {
     }
   }
 }
-
-document.addEventListener("DOMContentLoaded", initializeGame);

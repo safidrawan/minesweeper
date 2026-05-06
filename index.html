@@ -1,33 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/game.css">
-    <link rel="icon" type="image/png" href="./assets/images/flag.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/game.css" />
+    <link rel="icon" type="image/png" href="./assets/images/flag.png" />
     <script defer src="./assets/game.js"></script>
     <title>Minesweeper</title>
-</head>
-<body>
-    
-  <header>
+  </head>
+  <body>
+    <header>
       <h1>Minesweeper</h1>
-    <p class="instructions">Left click to reveal a tile. Right click/hold to flag/deflag a tile.</p>
-    <p> Mines Left: <span id="mines-left">0</span></p>
-    <p> Tiles Revealed: <span id="tiles-revealed">0</span></p>
-    <button id="reset-button">Reset Game</button>
-  </header>
-   <main>
-    <div id="game-over-message" class="hidden">
-      <h2 id="game-over-text"></h2>
-      <button id="play-again-button">Play Again</button>
-    </div>
-     <div id="game-board">
-    </div>
-   </main>
-   <footer>
-    Mohammad Rafi Safidrawan - 2026: Just for fun and learning purposes
-   </footer>
-
-</body>
+      <p class="instructions">
+        Left click to reveal a tile. Right click/hold to flag/unflag a tile.
+      </p>
+      <p>Mines Left: <span id="mines-left">0</span></p>
+      <p>Tiles Revealed: <span id="tiles-revealed">0</span></p>
+      <button id="reset-button">Reset Game</button>
+    </header>
+    <main>
+      <div id="game-over-message" class="hidden">
+        <h2 id="game-over-text"></h2>
+        <button id="play-again-button">Play Again</button>
+      </div>
+      <div id="level-chooser">
+        <div>
+          <div id="game-size">
+            <button id="small" data-type="size" data-value="small">9 x 9</button>
+            <button id="medium" data-type="size" data-value="medium">16 x 16</button>
+            <button id="large" data-type="size" data-value="large">16 x 30</button>
+          </div>
+          <div id="game-level">
+            <button id="easy" data-type="difficulty" data-value="easy">Easy</button>
+            <button id="normal" data-type="difficulty" data-value="normal">Normal</button>
+            <button id="hard" data-type="difficulty" data-value="hard">Hard</button>
+          </div>
+        </div>
+        <button id="start-button" data-type="button" data-value="start">Start</button>
+      </div>
+      <div id="game-board"></div>
+    </main>
+    <footer>
+      Mohammad Rafi Safidrawan - 2026: Just for fun and learning purposes
+    </footer>
+  </body>
 </html>

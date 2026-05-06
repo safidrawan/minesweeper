@@ -9,6 +9,7 @@
   --radius-lg: 20px;
   --padding-md: 10px;
   --padding-lg: 20px;
+  --cols: 9;
 
 
   --mine-color: #f44336;
@@ -50,8 +51,7 @@ header {
 #game-board {
   display: grid;
   gap: 2px;
-  grid-template-columns: repeat(10, var(--tile-size));
-  width: max-content;
+  grid-template-columns: repeat(var(--cols), var(--tile-size));
   justify-content: center;
   border: 2px solid #ccc;
   padding: var(--padding-md);
@@ -67,6 +67,11 @@ button {
   background-color: var(--btn-bg-color);
   color: var(--text-color);
   border: none;
+  min-width: 100px;
+  text-wrap: nowrap;
+}
+button:hover{
+  background-color: #555 !important;
 }
 .tile:hover {
   cursor: pointer;
@@ -100,6 +105,9 @@ button {
   background-color: var(--tile-bg-color);
   color: var(--text-color);
 }
+.selected {
+  background-color: var(--bg-color) !important;
+}
 
 footer {
   margin-top: 20px;
@@ -127,3 +135,39 @@ footer {
   color: var(--mine-color);
   text-align: center;
 }
+
+#level-chooser{
+  position:absolute;
+  border-radius: var(--radius-lg);
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 500px;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+backdrop-filter: blur(5px);
+
+
+  #game-size, #game-level{
+    display: flex;
+    flex-direction: column;
+
+    button{
+      background-color: var(--tile-bg-color);
+    }
+  }
+
+  #start-button{
+    width: 200px;
+  }
+  
+}
+#level-chooser>div{
+    display: flex;
+    gap: 20px;
+  }
