@@ -11,7 +11,6 @@
   --padding-lg: 20px;
   --cols: 9;
 
-
   --mine-color: #f44336;
   --flag-color: #25d56e;
   --bg-color: #222;
@@ -25,7 +24,7 @@ body {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
 }
 
@@ -35,6 +34,22 @@ header {
   color: var(--text-color);
 }
 
+#game-container {
+  width: 100%;
+  padding: var(--padding-lg);
+  overflow-x: auto;
+}
+#game-board {
+  display: grid;
+  flex-shrink: 0;
+  gap: 2px;
+  grid-template-columns: repeat(var(--cols), var(--tile-size));
+  margin: 0 auto;
+  width: fit-content;
+  border: 2px solid #ccc;
+  padding: var(--padding-md);
+  border-radius: var(--radius-lg);
+}
 .tile {
   width: var(--tile-size);
   height: var(--tile-size);
@@ -47,17 +62,6 @@ header {
   background-color: var(--tile-bg-color);
   border-radius: var(--radius-md);
 }
-
-#game-board {
-  display: grid;
-  gap: 2px;
-  grid-template-columns: repeat(var(--cols), var(--tile-size));
-  justify-content: center;
-  border: 2px solid #ccc;
-  padding: var(--padding-md);
-  border-radius: var(--radius-lg);
-}
-
 button {
   margin-top: var(--padding-md);
   padding: var(--padding-md) var(--padding-lg);
@@ -114,7 +118,6 @@ button.selected {
   color: var(--text-color);
 }
 
-
 footer {
   margin-top: 20px;
   color: var(--text-color);
@@ -129,7 +132,7 @@ footer {
   display: none;
   flex-direction: column;
   align-items: center;
-  margin-top: var(--padding-lg) ;
+  margin-top: var(--padding-lg);
   font-size: 24px;
   color: var(--mine-color);
   padding: var(--padding-lg);
@@ -137,43 +140,69 @@ footer {
   border-radius: var(--radius-lg);
 }
 
-#game-over-text{
+#game-over-text {
   color: var(--mine-color);
   text-align: center;
 }
 
-#level-chooser{
-  position:absolute;
+#level-chooser {
+  position: absolute;
   border-radius: var(--radius-lg);
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: rgba(0, 0, 0, 0.5);
-  width: 500px;
+  width: 90vw;
+  max-width: 500px;
   height: 500px;
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
   justify-content: center;
-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
 
-
-  #game-size, #game-level{
+  #game-size,
+  #game-level {
     display: flex;
     flex-direction: column;
 
-    button{
+    button {
       background-color: var(--tile-bg-color);
     }
   }
 
-  #start-button{
+  #start-button {
     width: 200px;
   }
-  
 }
-#level-chooser>div{
-    display: flex;
-    gap: 20px;
-  }
+#level-chooser > div {
+  display: flex;
+  gap: 20px;
+}
+/* 1. Global WebKit Scrollbars (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 10px;  
+  height: 10px; 
+}
+
+::-webkit-scrollbar-track {
+  background: #333; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--btn-bg-color);
+  border-radius: 10px;
+  border: 2px solid #333;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #888;
+}
+
+/* 2. Global Firefox Scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--btn-bg-color) #333;
+}
+
