@@ -132,8 +132,10 @@ function handleRightClick(tile, minesLeftElement) {
   if (tile.classList.contains("revealed")) return;
   tile.classList.toggle("flagged");
   if (tile.classList.contains("flagged")) {
+    flagsound.currentTime = 0;
     flagSound.play();
   } else {
+    unflagsound.currentTime = 0;
     unflagSound.play();
   }
 
@@ -167,6 +169,7 @@ function handleTileClick(tile, board, totalMines) {
     endGame(board, false);
   } else {
     tile.classList.add("revealed");
+    revealSound.currentTime = 0;
     revealSound.play();
     const row = parseInt(tile.dataset.row);
     const col = parseInt(tile.dataset.col);
@@ -202,8 +205,10 @@ function endGame(board, won) {
   });
   minesLeftElement.textContent = 0;
   if (won) {
+    winSound.currentTime = 0;
     winSound.play();
   } else {
+    defeatSound.currentTime = 0;
     defeatSound.play();
   }
   const message = won
