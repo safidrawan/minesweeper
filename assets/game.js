@@ -2,6 +2,7 @@ const gameBoard = document.getElementById("game-board");
 const minesLeftElement = document.getElementById("mines-left");
 const levelChooser = document.getElementById("level-chooser");
 
+
 const header = document.querySelector("header");
 const gameOverMessage = document.getElementById("game-over-message");
 const gameOverText = document.getElementById("game-over-text");
@@ -23,6 +24,13 @@ defeatSound.loop = false;
 revealSound.loop = false;
 unflagSound.loop = false;
 winSound.loop = false;
+
+explosionSound.preload = "auto";
+flagSound.preload = "auto";
+defeatSound.preload = "auto";
+revealSound.preload = "auto";
+unflagSound.preload = "auto";
+winSound.preload = "auto";
 
 resetButton.addEventListener("click", () => {
   location.reload();
@@ -74,6 +82,11 @@ let difficulty = "";
 let rows = 0;
 let cols = 0;
 let totalMines = 0;
+
+window.onload = function (){
+  document.getElementById('loader-wrapper').style.display = 'none';
+  document.getElementById('game-content').style.display = 'flex';
+}
 
 function initializeGame() {
   let minesLeft = totalMines;

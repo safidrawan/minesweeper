@@ -25,7 +25,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: center;
+  justify-content: flex-start;
+  min-height: 100svh;
+  margin: 0;
 }
 
 header {
@@ -33,7 +35,14 @@ header {
   margin-bottom: 20px;
   color: var(--text-color);
 }
-
+main{
+  flex:1;
+}
+#game-content {
+  display: none;
+  flex: 1;
+  flex-direction: column;
+}
 #game-container {
   width: 100%;
   padding: var(--padding-lg);
@@ -121,6 +130,8 @@ button.selected {
 footer {
   margin-top: 20px;
   color: var(--text-color);
+  text-align: center;
+  width: 100%;
 }
 
 #game-over-message {
@@ -182,12 +193,12 @@ footer {
 }
 /* 1. Global WebKit Scrollbars (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 10px;  
-  height: 10px; 
+  width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #333; 
+  background: #333;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -206,3 +217,39 @@ html {
   scrollbar-color: var(--btn-bg-color) #333;
 }
 
+#game-content {
+  display: none;
+}
+
+#loader-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-color);
+  z-index: 9999;
+  color: var(--btn-bg-color);
+}
+
+#spinner {
+  border: 4px solid rgba(0, 0, 0, 0.3);
+  border-top: 4px solid var(--btn-bg-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: var(--padding-lg);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
