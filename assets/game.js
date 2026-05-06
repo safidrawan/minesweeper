@@ -200,7 +200,7 @@ function endGame(board, won) {
         tile.classList.add("revealed");
         tile.classList.remove("flagged");
       }
-      tile.removeEventListener("click", handleTileClick);
+      gameBoard.style.pointerEvents = "none"
     });
   });
   minesLeftElement.textContent = 0;
