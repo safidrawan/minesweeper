@@ -1,8 +1,6 @@
 const gameBoard = document.getElementById("game-board");
 const minesLeftElement = document.getElementById("mines-left");
 const levelChooser = document.getElementById("level-chooser");
-// const gameSizeContainer = document.getElementById("game-size");
-// const gameLevelContainer = document.getElementById("game-level");
 
 const header = document.querySelector("header");
 const gameOverMessage = document.getElementById("game-over-message");

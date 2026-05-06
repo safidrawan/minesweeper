@@ -70,9 +70,17 @@ button {
   min-width: 100px;
   text-wrap: nowrap;
 }
-button:hover{
-  background-color: #555 !important;
+
+@media (hover: hover) {
+  button:hover {
+    background-color: #555; /* Only happens on desktop */
+  }
 }
+
+button.selected {
+  background-color: var(--bg-color) !important;
+}
+
 .tile:hover {
   cursor: pointer;
   background-color: #555;
@@ -105,9 +113,7 @@ button:hover{
   background-color: var(--tile-bg-color);
   color: var(--text-color);
 }
-.selected {
-  background-color: var(--bg-color) !important;
-}
+
 
 footer {
   margin-top: 20px;
