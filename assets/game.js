@@ -89,6 +89,8 @@ window.onload = function (){
 }
 
 function initializeGame() {
+  document.getElementById('loader-wrapper').style.display = 'none';
+  document.getElementById('game-content').style.display = 'flex';
   let minesLeft = totalMines;
   minesLeftElement.textContent = minesLeft;
   levelChooser.style.display = "none";
