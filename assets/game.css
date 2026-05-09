@@ -177,10 +177,11 @@ footer {
   #game-level {
     display: flex;
     flex-direction: column;
+  }
 
-    button {
-      background-color: var(--tile-bg-color);
-    }
+  #game-size button,
+  #game-level button {
+    background-color: var(--tile-bg-color);
   }
 
   #start-button {

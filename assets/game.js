@@ -132,10 +132,10 @@ function handleRightClick(tile, minesLeftElement) {
   if (tile.classList.contains("revealed")) return;
   tile.classList.toggle("flagged");
   if (tile.classList.contains("flagged")) {
-    flagsound.currentTime = 0;
+    flagSound.currentTime = 0;
     flagSound.play();
   } else {
-    unflagsound.currentTime = 0;
+    unflagSound.currentTime = 0;
     unflagSound.play();
   }
 
@@ -200,7 +200,7 @@ function endGame(board, won) {
         tile.classList.add("revealed");
         tile.classList.remove("flagged");
       }
-      gameBoard.style.pointerEvents = "none"
+      gameBoard.style.pointerEvents = "none";
     });
   });
   minesLeftElement.textContent = 0;
